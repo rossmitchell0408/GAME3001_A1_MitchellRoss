@@ -3,6 +3,7 @@
 #define __SPACE_SHIP__
 #include "DisplayObject.h"
 #include "TextureManager.h"
+#include "Behaviour.h"
 
 class SpaceShip final : public DisplayObject
 {
@@ -29,6 +30,8 @@ public:
 	void setTurnRate(float rate);
 	float getAccelerationRate() const;
 	void setAccelerationRate(float rate);
+	Behaviour getBehaviour();
+	void setBehaviour(Behaviour behave);
 	
 private:
 
@@ -39,9 +42,14 @@ private:
 	float m_maxSpeed;
 	float m_turnRate;
 	float m_accelerationRate;
+	Behaviour m_behaviour;
 
 	// private function
 	void m_Move();
+	void m_seeking();
+	void m_fleeing();
+	void m_arrival();
+	void m_obstacleAvoidance();
 };
 
 #endif /* defined (__SPACE_SHIP__) */

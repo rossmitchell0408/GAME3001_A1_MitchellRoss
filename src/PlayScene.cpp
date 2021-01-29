@@ -10,7 +10,9 @@
 
 PlayScene::PlayScene()
 {
+	
 	PlayScene::start();
+	
 }
 
 PlayScene::~PlayScene()
@@ -37,6 +39,7 @@ void PlayScene::update()
 void PlayScene::clean()
 {
 	removeAllChildren();
+	SoundManager::Instance().unload("PlaySong", SOUND_MUSIC);
 }
 
 void PlayScene::handleEvents()
@@ -50,20 +53,55 @@ void PlayScene::handleEvents()
 
 	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_1))
 	{
-		TheGame::Instance()->changeSceneState(START_SCENE);
+		//TheGame::Instance()->changeSceneState(START_SCENE);
+		m_pSpaceShip->setBehaviour(SEEKING);
 	}
-
+	
 	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_2))
 	{
-		TheGame::Instance()->changeSceneState(END_SCENE);
+		//TheGame::Instance()->changeSceneState(END_SCENE);
+		m_pSpaceShip->setBehaviour(FLEEING);
+		//m_pSpaceShip->setDestination({100.0f, 100.0f});
+	}
+	
+	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_3))
+	{
+		//TheGame::Instance()->changeSceneState(END_SCENE);
+		m_pSpaceShip->setBehaviour(ARRIVAL);
+	}
+	
+	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_4))
+	{
+		//TheGame::Instance()->changeSceneState(END_SCENE);
+		m_pSpaceShip->setBehaviour(OBSTACLE_AVOIDANCE);
 	}
 }
 
 void PlayScene::start()
 {
+	const SDL_Color pink = { 255, 100, 150, 255 };
+
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
+	SoundManager::Instance().load("../Assets/audio/Menu.mp3", "PlaySong", SOUND_MUSIC);
+	SoundManager::Instance().playMusic("PlaySong", -1, 0);
+	
+	m_pInstructionLabel1 = new Label("Press 1 for Seeking", "Dock51", 20, pink, glm::vec2(400.0f, 20.0f));
+	m_pInstructionLabel1->setParent(this);
+	addChild(m_pInstructionLabel1);
+
+	m_pInstructionLabel2 = new Label("Press 2 for Fleeing", "Dock51", 20, pink, glm::vec2(400.0f, 40.0f));
+	m_pInstructionLabel2->setParent(this);
+	addChild(m_pInstructionLabel2);
+	
+	m_pInstructionLabel3 = new Label("Press 3 for Arrival", "Dock51", 20, pink, glm::vec2(400.0f, 60.0f));
+	m_pInstructionLabel3->setParent(this);
+	addChild(m_pInstructionLabel3);
+	
+	m_pInstructionLabel4 = new Label("Press 4 for Obstacle Avoidance", "Dock51", 20, pink, glm::vec2(400.0f, 80.0f));
+	m_pInstructionLabel4->setParent(this);
+	addChild(m_pInstructionLabel4);
 	
 	m_pTarget = new Target();
 	m_pTarget->getTransform()->position = glm::vec2(700.0f, 300.0f);
