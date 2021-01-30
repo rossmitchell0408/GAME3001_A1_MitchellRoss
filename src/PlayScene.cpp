@@ -33,7 +33,7 @@ void PlayScene::update()
 {
 	updateDisplayList();
 
-	CollisionManager::AABBCheck(m_pSpaceShip, m_pObstacle);
+	//CollisionManager::AABBCheck(m_pSpaceShip, m_pObstacle);
 }
 
 void PlayScene::clean()
@@ -74,18 +74,20 @@ void PlayScene::handleEvents()
 	{
 		//TheGame::Instance()->changeSceneState(END_SCENE);
 		m_pSpaceShip->setBehaviour(OBSTACLE_AVOIDANCE);
+		m_pSpaceShip->setObstacle(m_pObstacle);
 	}
 }
 
 void PlayScene::start()
 {
+	
 	const SDL_Color pink = { 255, 100, 150, 255 };
 
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
 	SoundManager::Instance().load("../Assets/audio/Menu.mp3", "PlaySong", SOUND_MUSIC);
-	SoundManager::Instance().playMusic("PlaySong", -1, 0);
+	//SoundManager::Instance().playMusic("PlaySong", -1, 0);
 	
 	m_pInstructionLabel1 = new Label("Press 1 for Seeking", "Dock51", 20, pink, glm::vec2(400.0f, 20.0f));
 	m_pInstructionLabel1->setParent(this);
