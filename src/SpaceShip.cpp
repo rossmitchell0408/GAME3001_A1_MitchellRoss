@@ -35,13 +35,13 @@ void SpaceShip::draw()
 	TextureManager::Instance()->draw("spaceship", 
 		getTransform()->position.x, getTransform()->position.y, m_rotationAngle, 255, true);
 
-	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientation * 100.0f) );
-	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationMinus * 100.0f) );
-	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationPlus * 100.0f) );
-	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationSideLeft * 50.0f) );
-	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationSideRight * 50.0f) );
+	/*Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientation * 150.0f) );
+	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationMinus * 150.0f) );
+	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationPlus * 150.0f) );
+	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationSideLeft * 100.0f) );
+	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationSideRight * 100.0f) );
 	
-	Util::DrawCircle(getTransform()->position, getSlowRadius());
+	Util::DrawCircle(getTransform()->position, getSlowRadius());*/
 }
 
 void SpaceShip::update()
@@ -235,7 +235,8 @@ void SpaceShip::m_Move()
 		break;
 	case OBSTACLE_AVOIDANCE:
 		setMaxSpeed(5.0f);
-		setAccelerationRate(30.0f);
+		setAccelerationRate(20.0f);
+		setTurnRate(10.0f);
 		m_obstacleAvoidance();
 		break;
 	}
@@ -381,22 +382,26 @@ void SpaceShip::m_obstacleAvoidance()
 	// normalized direction
 	m_targetDirection = Util::normalize(m_targetDirection);
 	
-	if (CollisionManager::lineRectCheck(getTransform()->position, (getTransform()->position + m_orientationSideLeft * 50.0f), m_pObstacle->getTransform()->position - glm::vec2(100, 50), m_pObstacle->getWidth(), m_pObstacle->getHeight()))
+	if (CollisionManager::lineRectCheck(getTransform()->position, (getTransform()->position + m_orientationSideLeft * 100.0f), m_pObstacle->getTransform()->position - glm::vec2(100, 50), m_pObstacle->getWidth(), m_pObstacle->getHeight()))
 	{
 		m_targetRotation = Util::signedAngle(getOrientation(), getOrientationSideRight());
 	}
-	else if (CollisionManager::lineRectCheck(getTransform()->position, (getTransform()->position + m_orientationSideRight * 50.0f), m_pObstacle->getTransform()->position - glm::vec2(100, 50), m_pObstacle->getWidth(), m_pObstacle->getHeight()))
+	else if (CollisionManager::lineRectCheck(getTransform()->position, (getTransform()->position + m_orientationSideRight * 100.0f), m_pObstacle->getTransform()->position - glm::vec2(100, 50), m_pObstacle->getWidth(), m_pObstacle->getHeight()))
 	{
 		m_targetRotation = Util::signedAngle(getOrientation(), getOrientationSideLeft());
 	}
-	else if (CollisionManager::lineRectCheck(getTransform()->position, (getTransform()->position + m_orientationPlus * 100.0f), m_pObstacle->getTransform()->position - glm::vec2(100, 50), m_pObstacle->getWidth(), m_pObstacle->getHeight()))
+	else if (CollisionManager::lineRectCheck(getTransform()->position, (getTransform()->position + m_orientationPlus * 150.0f), m_pObstacle->getTransform()->position - glm::vec2(100, 50), m_pObstacle->getWidth(), m_pObstacle->getHeight()))
 	{
 		m_targetRotation = Util::signedAngle(getOrientation(), getOrientationMinus());
 	}
-	else if (CollisionManager::lineRectCheck(getTransform()->position, (getTransform()->position + m_orientationMinus * 100.0f), m_pObstacle->getTransform()->position - glm::vec2(100, 50), m_pObstacle->getWidth(), m_pObstacle->getHeight()))
+	else if (CollisionManager::lineRectCheck(getTransform()->position, (getTransform()->position + m_orientationMinus * 150.0f), m_pObstacle->getTransform()->position - glm::vec2(100, 50), m_pObstacle->getWidth(), m_pObstacle->getHeight()))
 	{
 		m_targetRotation = Util::signedAngle(getOrientation(), getOrientationPlus());
 	}
+	//else if (CollisionManager::lineRectCheck(getTransform()->position, (getTransform()->position + m_orientation * 150.0f), m_pObstacle->getTransform()->position - glm::vec2(100, 50), m_pObstacle->getWidth(), m_pObstacle->getHeight()))
+	//{
+	//	m_targetRotation = Util::signedAngle(getOrientation(), getOrientationPlus());
+	//}
 	else
 	{
 		m_targetRotation = Util::signedAngle(getOrientation(), m_targetDirection);

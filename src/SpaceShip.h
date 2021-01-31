@@ -61,11 +61,11 @@ private:
 	float m_accelerationRate;
 	
 	Behaviour m_behaviour;
-	float m_targetRadius;
+	//float m_targetRadius;
 	float m_slowRadius;
-	float m_timeToTarget = 0.1f;
-	float m_maxAcceleration = 10.0f;
-	float m_stopRadius = 0.0f;
+	//float m_timeToTarget = 0.1f;
+	//float m_maxAcceleration = 10.0f;
+	float m_stopRadius = 0.1f;
 	GameObject* m_pObstacle;
 	float m_targetRotation = 0.0f;
 	
