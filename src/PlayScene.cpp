@@ -32,6 +32,7 @@ void PlayScene::draw()
 void PlayScene::update()
 {
 	updateDisplayList();
+	m_pSpaceShip->setObstacle(m_pObstacle);
 
 	//CollisionManager::AABBCheck(m_pSpaceShip, m_pObstacle);
 }
@@ -44,6 +45,7 @@ void PlayScene::clean()
 
 void PlayScene::handleEvents()
 {
+	/*bool press = false;*/
 	EventManager::Instance().update();
 
 	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
@@ -53,52 +55,83 @@ void PlayScene::handleEvents()
 
 	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_1))
 	{
-		m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 700 + 50, rand() % 600);
-		m_pTarget->getTransform()->position = glm::vec2(rand() % 700 + 50, rand() % 600);
-		m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
-		m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
-		m_pSpaceShip->setRotation(0.0f);
-		m_pSpaceShip->setBehaviour(SEEKING);
-		m_pSpaceShip->setEnabled(true);
-		m_pObstacle->setEnabled(false);
+		if (m_pressed == false)
+		{
+			m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 700 + 50, rand() % 600);
+			m_pTarget->getTransform()->position = glm::vec2(rand() % 700 + 50, rand() % 600);
+			m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
+			m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+			m_pSpaceShip->setRotation(0.0f);
+			m_pSpaceShip->setBehaviour(SEEKING);
+			m_pSpaceShip->setEnabled(true);
+			m_pObstacle->setEnabled(false);
+			m_pressed = true;
+		}
 	}
-	
-	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_2))
+	else if (EventManager::Instance().isKeyDown(SDL_SCANCODE_2))
 	{
-		m_pTarget->getTransform()->position = glm::vec2(rand() % 700 + 50, rand()%600);
-		m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 700 + 50, rand()%600);
-		m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
-		m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
-		m_pSpaceShip->setRotation(0.0f);
-		m_pSpaceShip->setBehaviour(FLEEING);
-		m_pSpaceShip->setEnabled(true);
-		m_pObstacle->setEnabled(false);
-		//m_pSpaceShip->setDestination({100.0f, 100.0f});
+		if (m_pressed == false)
+		{
+			m_pTarget->getTransform()->position = glm::vec2(rand() % 200 + 300, rand() % 200 + 200);
+			m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 200 + 300, rand() % 200 + 200);
+			m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
+			m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+			m_pSpaceShip->setRotation(0.0f);
+			m_pSpaceShip->setBehaviour(FLEEING);
+			m_pSpaceShip->setEnabled(true);
+			m_pObstacle->setEnabled(false);
+			m_pressed = true;
+		}
 	}
-	
-	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_3))
+	else if (EventManager::Instance().isKeyDown(SDL_SCANCODE_3))
 	{
-		m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 700 + 50, 50);
-		m_pTarget->getTransform()->position = glm::vec2(rand() % 700 + 50, 500);
-		m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
-		m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
-		m_pSpaceShip->setRotation(0.0f);
-		m_pSpaceShip->setBehaviour(ARRIVAL);
-		m_pSpaceShip->setEnabled(true);
-		m_pObstacle->setEnabled(false);
+		if (m_pressed == false)
+		{
+			m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 700 + 50, 50);
+			m_pTarget->getTransform()->position = glm::vec2(rand() % 700 + 50, 500);
+			m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
+			m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+			m_pSpaceShip->setRotation(0.0f);
+			m_pSpaceShip->setBehaviour(ARRIVAL);
+			m_pSpaceShip->setEnabled(true);
+			m_pObstacle->setEnabled(false);
+			m_pressed = true;
+		}
 	}
-	
-	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_4))
+	else if (EventManager::Instance().isKeyDown(SDL_SCANCODE_4))
 	{
-		m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 700 + 50, 50.0f);
-		m_pTarget->getTransform()->position = glm::vec2(400.0f, 500.0f);
-		m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
-		m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
-		m_pSpaceShip->setRotation(0.0f);
-		m_pSpaceShip->setBehaviour(OBSTACLE_AVOIDANCE);
-		m_pSpaceShip->setEnabled(true);
-		m_pObstacle->setEnabled(true);
-		m_pSpaceShip->setObstacle(m_pObstacle);
+		if (m_pressed == false)
+		{
+			m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 700 + 50, 50.0f);
+			m_pTarget->getTransform()->position = glm::vec2(400.0f, 500.0f);
+			m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
+			m_pSpaceShip->getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
+			m_pSpaceShip->setRotation(0.0f);
+			m_pSpaceShip->setBehaviour(OBSTACLE_AVOIDANCE);
+			m_pSpaceShip->setEnabled(true);
+			m_pObstacle->setEnabled(true);
+			m_pSpaceShip->setObstacle(m_pObstacle);
+			m_pressed = true;
+		}
+	}
+	else if (EventManager::Instance().isKeyDown(SDL_SCANCODE_0))
+	{
+		if (m_pressed == false)
+		{
+			if (m_pSpaceShip->getDisplayLines())
+			{
+				m_pSpaceShip->setDisplayLines(false);
+			}
+			else
+			{
+				m_pSpaceShip->setDisplayLines(true);
+			}
+			m_pressed = true;
+		}
+	}
+	else
+	{
+		m_pressed = false;
 	}
 }
 
@@ -111,21 +144,21 @@ void PlayScene::start()
 	m_guiTitle = "Play Scene";
 
 	SoundManager::Instance().load("../Assets/audio/Menu.mp3", "PlaySong", SOUND_MUSIC);
-	//SoundManager::Instance().playMusic("PlaySong", -1, 0);
+	SoundManager::Instance().playMusic("PlaySong", -1, 0);
 	
-	m_pInstructionLabel1 = new Label("Press 1 for Seeking", "Dock51", 20, pink, glm::vec2(400.0f, 20.0f));
+	m_pInstructionLabel1 = new Label("Press 1 for Seeking", "Pixel", 15, pink, glm::vec2(400.0f, 20.0f));
 	m_pInstructionLabel1->setParent(this);
 	addChild(m_pInstructionLabel1);
 
-	m_pInstructionLabel2 = new Label("Press 2 for Fleeing", "Dock51", 20, pink, glm::vec2(400.0f, 40.0f));
+	m_pInstructionLabel2 = new Label("Press 2 for Fleeing", "Pixel", 15, pink, glm::vec2(400.0f, 40.0f));
 	m_pInstructionLabel2->setParent(this);
 	addChild(m_pInstructionLabel2);
 	
-	m_pInstructionLabel3 = new Label("Press 3 for Arrival", "Dock51", 20, pink, glm::vec2(400.0f, 60.0f));
+	m_pInstructionLabel3 = new Label("Press 3 for Arrival", "Pixel", 15, pink, glm::vec2(400.0f, 60.0f));
 	m_pInstructionLabel3->setParent(this);
 	addChild(m_pInstructionLabel3);
 	
-	m_pInstructionLabel4 = new Label("Press 4 for Obstacle Avoidance", "Dock51", 20, pink, glm::vec2(400.0f, 80.0f));
+	m_pInstructionLabel4 = new Label("Press 4 for Obstacle Avoidance", "Pixel", 15, pink, glm::vec2(400.0f, 80.0f));
 	m_pInstructionLabel4->setParent(this);
 	addChild(m_pInstructionLabel4);
 	

@@ -6,7 +6,7 @@
 
 SpaceShip::SpaceShip()
 {
-	TextureManager::Instance()->load("../Assets/textures/spaceship.png", "spaceship");
+	TextureManager::Instance()->load("../Assets/textures/space-ship.png", "spaceship");
 
 	auto size = TextureManager::Instance()->getTextureSize("spaceship");
 	setWidth(size.x);
@@ -24,6 +24,8 @@ SpaceShip::SpaceShip()
 	setTurnRate(10.0f);
 	setBehaviour(SEEKING);
 	setSlowRadius(300.0f);
+
+	setDisplayLines(false);
 }
 
 SpaceShip::~SpaceShip()
@@ -35,13 +37,16 @@ void SpaceShip::draw()
 	TextureManager::Instance()->draw("spaceship", 
 		getTransform()->position.x, getTransform()->position.y, m_rotationAngle, 255, true);
 
-	/*Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientation * 150.0f) );
-	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationMinus * 150.0f) );
-	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationPlus * 150.0f) );
-	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationSideLeft * 100.0f) );
-	Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationSideRight * 100.0f) );
-	
-	Util::DrawCircle(getTransform()->position, getSlowRadius());*/
+	if (getDisplayLines() == true)
+	{
+		Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientation * 150.0f));
+		Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationMinus * 150.0f));
+		Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationPlus * 150.0f));
+		Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationSideLeft * 100.0f));
+		Util::DrawLine(getTransform()->position, (getTransform()->position + m_orientationSideRight * 100.0f));
+
+		Util::DrawCircle(getTransform()->position, getSlowRadius());
+	}
 }
 
 void SpaceShip::update()
@@ -211,6 +216,16 @@ GameObject* SpaceShip::getObstacle()
 void SpaceShip::setObstacle(GameObject* obstacle)
 {
 	m_pObstacle = obstacle;
+}
+
+bool SpaceShip::getDisplayLines()
+{
+	return m_displayLines;
+}
+
+void SpaceShip::setDisplayLines(bool display)
+{
+	m_displayLines = display;
 }
 
 void SpaceShip::m_Move()

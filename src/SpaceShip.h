@@ -45,6 +45,9 @@ public:
 	void setSlowRadius(float radius);
 	GameObject* getObstacle();
 	void setObstacle(GameObject* obstacle);
+
+	bool getDisplayLines();
+	void setDisplayLines(bool display);
 	
 private:
 
@@ -61,13 +64,12 @@ private:
 	float m_accelerationRate;
 	
 	Behaviour m_behaviour;
-	//float m_targetRadius;
 	float m_slowRadius;
-	//float m_timeToTarget = 0.1f;
-	//float m_maxAcceleration = 10.0f;
 	float m_stopRadius = 0.1f;
 	GameObject* m_pObstacle;
 	float m_targetRotation = 0.0f;
+
+	bool m_displayLines;
 	
 	// private function
 	void m_Move();

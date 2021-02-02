@@ -46,17 +46,17 @@ void StartScene::handleEvents()
 void StartScene::start()
 {
 	const SDL_Color pink = { 255, 100, 150, 255 };
-	m_pStartLabel = new Label("Start Scene", "Dock51", 80, pink, glm::vec2(400.0f, 60.0f));
+	m_pStartLabel = new Label("Start Scene", "Pixel", 40, pink, glm::vec2(400.0f, 60.0f));
 	m_pStartLabel->setParent(this);
 	addChild(m_pStartLabel);
 
-	m_pNameLabel = new Label("Ross Mitchell 100967443", "Dock51", 20, pink, glm::vec2(400.0f, 120.0f));
+	m_pNameLabel = new Label("Ross Mitchell 100967443", "Pixel", 20, pink, glm::vec2(400.0f, 120.0f));
 	m_pNameLabel->setParent(this);
 	addChild(m_pNameLabel);
 
-	m_pInstructionLabel = new Label("Click to start", "Dock51", 30, pink, glm::vec2(400.0f, 350.0f));
+	/*m_pInstructionLabel = new Label("Click to start", "Pixel", 30, pink, glm::vec2(400.0f, 350.0f));
 	m_pInstructionLabel->setParent(this);
-	addChild(m_pInstructionLabel);
+	addChild(m_pInstructionLabel);*/
 
 	// Start Button
 	m_pStartButton = new Button();

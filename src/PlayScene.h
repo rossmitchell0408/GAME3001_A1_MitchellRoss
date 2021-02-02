@@ -26,6 +26,7 @@ public:
 private:
 	// IMGUI Function
 	void GUI_Function() const;
+	bool m_pressed = false;
 	std::string m_guiTitle;
 	
 	glm::vec2 m_mousePosition;

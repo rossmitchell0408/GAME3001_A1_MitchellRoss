@@ -4,7 +4,7 @@
 
 Target::Target()
 {
-	TextureManager::Instance()->load("../Assets/textures/Circle.png","circle");
+	TextureManager::Instance()->load("../Assets/textures/target.png","circle");
 
 	const auto size = TextureManager::Instance()->getTextureSize("circle");
 	setWidth(size.x);
