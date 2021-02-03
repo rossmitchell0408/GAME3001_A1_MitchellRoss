@@ -29,7 +29,7 @@ bool CollisionManager::squaredRadiusCheck(GameObject* object1, GameObject* objec
 			switch (object2->getType()) {
 			case TARGET:
 				std::cout << "Collision with Target!" << std::endl;
-				SoundManager::Instance().playSound("yay", 0);
+				SoundManager::Instance().playSound("cheer", 0);
 				break;
 			default:
 				
@@ -56,42 +56,44 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 	const float p1Height = object1->getHeight();
 	const float p2Width = object2->getWidth();
 	const float p2Height = object2->getHeight();
-
-	if (
-		p1.x < p2.x + p2Width &&
-		p1.x + p1Width > p2.x&&
-		p1.y < p2.y + p2Height &&
-		p1.y + p1Height > p2.y
-		)
+	
+	if (object1->isEnabled() && object2->isEnabled()) // I added this
 	{
-		if (!object2->getRigidBody()->isColliding) {
+		if (
+			p1.x < p2.x + p2Width &&
+			p1.x + p1Width > p2.x &&
+			p1.y < p2.y + p2Height &&
+			p1.y + p1Height > p2.y
+			)
+		{
+			if (!object2->getRigidBody()->isColliding) {
 
-			object2->getRigidBody()->isColliding = true;
+				object2->getRigidBody()->isColliding = true;
 
-			switch (object2->getType()) {
-			case TARGET:
-				std::cout << "Collision with Target!" << std::endl;
-				SoundManager::Instance().playSound("yay", 0);
-				break;
-			case OBSTACLE:
-				std::cout << "Collision with Obstacle!!!" << std::endl;
-				SoundManager::Instance().playSound("yay", 0);
-				break;
-			default:
-				
-				break;
+				switch (object2->getType()) {
+				case TARGET:
+					std::cout << "Collision with Target!" << std::endl;
+					SoundManager::Instance().playSound("cheer", 0);
+					break;
+				case OBSTACLE:
+					std::cout << "Collision with Obstacle!!!" << std::endl;
+					SoundManager::Instance().playSound("explosion", 0);
+					break;
+				default:
+
+					break;
+				}
+
+				return true;
 			}
-
-			return true;
+			return false;
 		}
-		return false;
+		else
+		{
+			object2->getRigidBody()->isColliding = false;
+			return false;
+		}
 	}
-	else
-	{
-		object2->getRigidBody()->isColliding = false;
-		return false;
-	}
-
 	return false;
 }
 
@@ -246,39 +248,42 @@ bool CollisionManager::circleAABBCheck(GameObject* object1, GameObject* object2)
 				std::cout << "Collision with Planet!" << std::endl;
 				SoundManager::Instance().playSound("yay", 0);
 				break;
-			case SHIP:
-				{
-					SoundManager::Instance().playSound("thunder", 0);
-					auto velocityX = object1->getRigidBody()->velocity.x;
-					auto velocityY = object1->getRigidBody()->velocity.y;
+			case OBSTACLE:
+				std::cout << "Collision with obstacle!!" << std::endl;
+				SoundManager::Instance().playSound("explosion", 0);
+			//case SHIP:
+			//	{
+			//		SoundManager::Instance().playSound("thunder", 0);
+			//		auto velocityX = object1->getRigidBody()->velocity.x;
+			//		auto velocityY = object1->getRigidBody()->velocity.y;
 
-					if ((attackVector.x > 0 && attackVector.y < 0) || (attackVector.x < 0 && attackVector.y < 0))
-						// top right or top left
-					{
-						
-						if (angle <= 45)
-						{
-							object1->getRigidBody()->velocity = glm::vec2(velocityX, -velocityY);
-						}
-						else
-						{
-							object1->getRigidBody()->velocity = glm::vec2(-velocityX, velocityY);
-						}
-					}
+			//		if ((attackVector.x > 0 && attackVector.y < 0) || (attackVector.x < 0 && attackVector.y < 0))
+			//			// top right or top left
+			//		{
+			//			
+			//			if (angle <= 45)
+			//			{
+			//				object1->getRigidBody()->velocity = glm::vec2(velocityX, -velocityY);
+			//			}
+			//			else
+			//			{
+			//				object1->getRigidBody()->velocity = glm::vec2(-velocityX, velocityY);
+			//			}
+			//		}
 
-					if ((attackVector.x > 0 && attackVector.y > 0) || (attackVector.x < 0 && attackVector.y > 0))
-						// bottom right or bottom left
-					{
-						if (angle <= 135)
-						{
-							object1->getRigidBody()->velocity = glm::vec2(-velocityX, velocityY);
-													}
-						else
-						{
-							object1->getRigidBody()->velocity = glm::vec2(velocityX, -velocityY);
-													}
-					}
-				}
+			//		if ((attackVector.x > 0 && attackVector.y > 0) || (attackVector.x < 0 && attackVector.y > 0))
+			//			// bottom right or bottom left
+			//		{
+			//			if (angle <= 135)
+			//			{
+			//				object1->getRigidBody()->velocity = glm::vec2(-velocityX, velocityY);
+			//										}
+			//			else
+			//			{
+			//				object1->getRigidBody()->velocity = glm::vec2(velocityX, -velocityY);
+			//										}
+			//		}
+			//	}
 				
 
 				break;

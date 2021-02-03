@@ -1,5 +1,7 @@
 #include "Button.h"
 #include <utility>
+
+#include "SoundManager.h"
 #include "TextureManager.h"
 
 
@@ -17,6 +19,7 @@ Button::Button(const std::string& image_path, std::string button_name, const Gam
 m_alpha(255), m_name(std::move(button_name)), m_isCentered(is_centered), m_active(true)
 {
 	TextureManager::Instance()->load(image_path,m_name);
+	SoundManager::Instance().load("../Assets/audio/Button.wav", "click", SOUND_SFX);
 
 	const auto size = TextureManager::Instance()->getTextureSize(m_name);
 	setWidth(size.x);

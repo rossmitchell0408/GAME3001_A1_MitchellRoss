@@ -1,10 +1,13 @@
 #include "Target.h"
+
+#include "SoundManager.h"
 #include "TextureManager.h"
 
 
 Target::Target()
 {
 	TextureManager::Instance()->load("../Assets/textures/target.png","circle");
+	SoundManager::Instance().load("../Assets/audio/Cheering.wav", "cheer", SOUND_SFX);
 
 	const auto size = TextureManager::Instance()->getTextureSize("circle");
 	setWidth(size.x);

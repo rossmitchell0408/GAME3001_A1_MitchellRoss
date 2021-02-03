@@ -34,7 +34,8 @@ void PlayScene::update()
 	updateDisplayList();
 	m_pSpaceShip->setObstacle(m_pObstacle);
 
-	//CollisionManager::AABBCheck(m_pSpaceShip, m_pObstacle);
+	CollisionManager::circleAABBCheck(m_pSpaceShip, m_pObstacle);
+	CollisionManager::squaredRadiusCheck(m_pSpaceShip, m_pTarget);
 }
 
 void PlayScene::clean()
@@ -57,6 +58,7 @@ void PlayScene::handleEvents()
 	{
 		if (m_pressed == false)
 		{
+			SoundManager::Instance().playSound("click", 0, -1);
 			m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 700 + 50, rand() % 600);
 			m_pTarget->getTransform()->position = glm::vec2(rand() % 700 + 50, rand() % 600);
 			m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
@@ -72,6 +74,7 @@ void PlayScene::handleEvents()
 	{
 		if (m_pressed == false)
 		{
+			SoundManager::Instance().playSound("click", 0, -1);
 			m_pTarget->getTransform()->position = glm::vec2(rand() % 200 + 300, rand() % 200 + 200);
 			m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 200 + 300, rand() % 200 + 200);
 			m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
@@ -87,6 +90,7 @@ void PlayScene::handleEvents()
 	{
 		if (m_pressed == false)
 		{
+			SoundManager::Instance().playSound("click", 0, -1);
 			m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 700 + 50, 50);
 			m_pTarget->getTransform()->position = glm::vec2(rand() % 700 + 50, 500);
 			m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
@@ -102,6 +106,7 @@ void PlayScene::handleEvents()
 	{
 		if (m_pressed == false)
 		{
+			SoundManager::Instance().playSound("click", 0, -1);
 			m_pSpaceShip->getTransform()->position = glm::vec2(rand() % 700 + 50, 50.0f);
 			m_pTarget->getTransform()->position = glm::vec2(400.0f, 500.0f);
 			m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
@@ -116,6 +121,7 @@ void PlayScene::handleEvents()
 	}
 	else if (EventManager::Instance().isKeyDown(SDL_SCANCODE_0))
 	{
+		SoundManager::Instance().playSound("click", 0, -1);
 		if (m_pressed == false)
 		{
 			if (m_pSpaceShip->getDisplayLines())
