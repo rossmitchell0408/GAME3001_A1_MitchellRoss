@@ -235,22 +235,20 @@ void SpaceShip::m_Move()
 	case SEEKING:
 		m_seeking();
 		setMaxSpeed(10.0f);
-		setAccelerationRate(30.0f);
+		setTurnRate(10.0f);
 		break;
 	case FLEEING:
 		m_fleeing();
 		setMaxSpeed(10.0f);
-		setAccelerationRate(30.0f);
+		setTurnRate(10.0f);
 		break;
 	case ARRIVAL:
 		setMaxSpeed(10.0f);
-		setAccelerationRate(20.0f);
 		setTurnRate(5.0f);
 		m_arrival();
 		break;
 	case OBSTACLE_AVOIDANCE:
 		setMaxSpeed(5.0f);
-		setAccelerationRate(20.0f);
 		setTurnRate(10.0f);
 		m_obstacleAvoidance();
 		break;

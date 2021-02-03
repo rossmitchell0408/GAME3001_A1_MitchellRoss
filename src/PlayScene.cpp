@@ -32,7 +32,7 @@ void PlayScene::draw()
 void PlayScene::update()
 {
 	updateDisplayList();
-	m_pSpaceShip->setObstacle(m_pObstacle);
+	
 
 	CollisionManager::circleAABBCheck(m_pSpaceShip, m_pObstacle);
 	CollisionManager::squaredRadiusCheck(m_pSpaceShip, m_pTarget);
@@ -66,6 +66,7 @@ void PlayScene::handleEvents()
 			m_pSpaceShip->setRotation(0.0f);
 			m_pSpaceShip->setBehaviour(SEEKING);
 			m_pSpaceShip->setEnabled(true);
+			m_pTarget->setEnabled(true);
 			m_pObstacle->setEnabled(false);
 			m_pressed = true;
 		}
@@ -82,6 +83,7 @@ void PlayScene::handleEvents()
 			m_pSpaceShip->setRotation(0.0f);
 			m_pSpaceShip->setBehaviour(FLEEING);
 			m_pSpaceShip->setEnabled(true);
+			m_pTarget->setEnabled(true);
 			m_pObstacle->setEnabled(false);
 			m_pressed = true;
 		}
@@ -98,6 +100,7 @@ void PlayScene::handleEvents()
 			m_pSpaceShip->setRotation(0.0f);
 			m_pSpaceShip->setBehaviour(ARRIVAL);
 			m_pSpaceShip->setEnabled(true);
+			m_pTarget->setEnabled(true);
 			m_pObstacle->setEnabled(false);
 			m_pressed = true;
 		}
@@ -114,8 +117,9 @@ void PlayScene::handleEvents()
 			m_pSpaceShip->setRotation(0.0f);
 			m_pSpaceShip->setBehaviour(OBSTACLE_AVOIDANCE);
 			m_pSpaceShip->setEnabled(true);
+			m_pTarget->setEnabled(true);
 			m_pObstacle->setEnabled(true);
-			m_pSpaceShip->setObstacle(m_pObstacle);
+			
 			m_pressed = true;
 		}
 	}
@@ -167,9 +171,14 @@ void PlayScene::start()
 	m_pInstructionLabel4 = new Label("Press 4 for Obstacle Avoidance", "Pixel", 15, pink, glm::vec2(400.0f, 80.0f));
 	m_pInstructionLabel4->setParent(this);
 	addChild(m_pInstructionLabel4);
+
+	m_pInstructionLabel0 = new Label("Press 0 to toggle lines", "Pixel", 15, pink, glm::vec2(400.0f, 100.0f));
+	m_pInstructionLabel0->setParent(this);
+	addChild(m_pInstructionLabel0);
 	
 	m_pTarget = new Target();
 	m_pTarget->getTransform()->position = glm::vec2(400.0f, 500.0f);
+	m_pTarget->setEnabled(false);
 	addChild(m_pTarget);
 
 	m_pObstacle = new Obstacle();
@@ -182,6 +191,7 @@ void PlayScene::start()
 	m_pSpaceShip->getTransform()->position = glm::vec2(400.0f, 100.0f);
 	m_pSpaceShip->setEnabled(false);
 	m_pSpaceShip->setDestination(m_pTarget->getTransform()->position);
+	m_pSpaceShip->setObstacle(m_pObstacle);
 	addChild(m_pSpaceShip);
 }
 
